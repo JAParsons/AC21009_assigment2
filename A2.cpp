@@ -88,4 +88,55 @@ int main()
 		cout << currentGen[j];
 	}
 
+	
+	for(int k=0; k<=height; k++) //generate and print next generations until height is reached
+	{
+		for(int m=0; m<width; m++)
+		{
+			int lft, rght, temp;
+		
+			if(m=0) //if at left-end of array
+			{
+				lft = currentGen[width-1]; //get lft from other end of array
+			}
+			else
+			{
+				lft = currentGen[m-1]; //else get immediate lft
+			}
+		
+			if(m=width-1) //if at right-end of array
+			{
+				rght = currentGen[0]; //get rght from other end of array
+			}
+			else
+			{
+				rght = currentGen[m+1]; //else get immediate rght
+			}
+
+			nxtGen[m] = ruleResult(lft, currentGen[m], rght); //get and set the state of next cell
+		
+			if(m=width-1) //if at the end of the current line
+			{
+				for(int l=0; l<width; l++) //print the new generation
+				{
+					cout << nxtGen[l];
+				}
+
+				for(int n=0; n<width; n++) //set current generation to be the next 
+				{
+					currentGen[n] = nxtGen[n];
+				}	
+				
+				
+			}
+		}
+
+	}	
+
+
+
+
+
+
+
 }
