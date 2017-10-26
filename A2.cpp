@@ -4,7 +4,6 @@
 
 #include <iostream>
 #include <string>
-//#include <vector>
 
 using namespace std;
 
@@ -12,7 +11,7 @@ using namespace std;
 int width; //width of grid
 int height; //height of grid (number of generations)
 int rule; //entered decimal rule
-int binaryRule[7]; //array to hold the rule in a binary format
+int binaryRule[8] {0,0,0,1,1,1,1,0}; //array to hold the rule in a binary format
 
 
 
@@ -66,11 +65,11 @@ int main()
 	// get user input
 	cout << "Enter the desired width: ";
 	cin >> width;
-/*
+
 	cout << "Enter the desired height: ";   
 	cin >> height;
 
-	cout << "Enter the desired rule: ";
+	/*cout << "Enter the desired rule: ";
 	cin >> rule;*/
 
 	int currentGen[width];
@@ -87,35 +86,40 @@ int main()
 	{
 		cout << currentGen[j];
 	}
+	cout << endl; // add new line 
+	
 
 	
-	for(int k=0; k<=height; k++) //generate and print next generations until height is reached
+	for(int k=0; k<height; k++) //generate and print next generations until height is reached
 	{
 		for(int m=0; m<width; m++)
 		{
-			int lft, rght, temp;
+			int lft, rght = 0;
 		
-			if(m=0) //if at left-end of array
+			if(m==0) //if at left-end of array
 			{
-				lft = currentGen[width-1]; //get lft from other end of array
+				lft = currentGen[(width-1)]; //get lft from other end of array
 			}
 			else
 			{
-				lft = currentGen[m-1]; //else get immediate lft
+				lft = currentGen[(m-1)]; //else get immediate lft
 			}
 		
-			if(m=width-1) //if at right-end of array
+			if(m==width-1) //if at right-end of array
 			{
 				rght = currentGen[0]; //get rght from other end of array
 			}
 			else
 			{
-				rght = currentGen[m+1]; //else get immediate rght
+				rght = currentGen[(m+1)]; //else get immediate rght
 			}
-
+				
+	
 			nxtGen[m] = ruleResult(lft, currentGen[m], rght); //get and set the state of next cell
+
+
 		
-			if(m=width-1) //if at the end of the current line
+			if(m==width-1) //if at the end of the current line
 			{
 				for(int l=0; l<width; l++) //print the new generation
 				{
@@ -126,6 +130,7 @@ int main()
 				{
 					currentGen[n] = nxtGen[n];
 				}	
+				cout << endl; // add new line 
 				
 				
 			}
