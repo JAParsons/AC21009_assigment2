@@ -12,6 +12,7 @@ int width; //width of grid
 int height; //height of grid (number of generations)
 int rule; //entered decimal rule
 int binaryRule[8] {0,0,0,1,1,1,1,0}; //array to hold the rule in a binary format
+int number = 0;
 
 
 
@@ -56,7 +57,63 @@ int ruleResult(int lft, int mid, int rght) //input 3 cell states and use specifi
 
 void convert(int number) //method to convert an int input to binary format
 {
-	
+	cout << "Please input the number you would like to use (must be between 0 and 255)"
+	cin >> number;
+
+	while((cin.fail()) || (number >255 || ruleset < -1))
+	{
+		cout << "Number must be between 0 and 255: " << endl;
+		cin.ignore(256, '\n');
+		cin >>number
+	}
+
+		if (number >= 128)
+		{
+			binaryRule[0] = 1;
+			number -= 128;
+		}
+
+		if(number >= 64)
+		{
+			binaryRule[1] = 1;
+			number -= 64;
+		}
+
+		if(number >= 32)
+		{
+			binaryRule[2] = 1;
+			number -= 32;
+		}
+
+		if(number >= 16)
+		{
+			binaryRule[3] = 1;
+			number -=16;
+		}
+
+		if(number >= 8)
+		{
+			binaryRule[4] = 1;
+			number -= 8;
+		}
+
+		if (number >= 4)
+		{
+			binaryRule[5] = 1;
+			number -= 4;
+		}
+
+		if (number >= 2)
+		{
+			binaryRule[6] = 1;
+			number -= 2;
+		}
+
+		if (number >= 1)
+		{
+			binaryRule[7] =1;
+			number -= 1;
+		}
 }
 
 
