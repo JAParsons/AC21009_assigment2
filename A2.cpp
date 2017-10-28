@@ -3,7 +3,7 @@
 // Alex Quinn
 
 #include <iostream>
-#include <string>
+#include <fstream>
 
 using namespace std;
 
@@ -12,8 +12,7 @@ int width; //width of grid
 int height; //height of grid (number of generations)
 int rule; //entered decimal rule
 int binaryRule[8] {0,0,0,1,1,1,1,0}; //array to hold the rule in a binary format
-int number = 0;
-
+int number;
 
 
 int ruleResult(int lft, int mid, int rght) //input 3 cell states and use specified rules to return the state of the new cell 
@@ -55,18 +54,20 @@ int ruleResult(int lft, int mid, int rght) //input 3 cell states and use specifi
 }
 
 
-void convert(int number) //method to convert an int input to binary format
+void convert() //method to convert an int input to binary format
 {
-	cout << "Please input the number you would like to use (must be between 0 and 255)"
+	cout << "Please input the rule you would like to use (must be between 0 and 255):\n";
 	cin >> number;
 
-	while((cin.fail()) || (number >255 || ruleset < -1))
+	while((cin.fail()) || number >255 || number < 0)
 	{
-		cout << "Number must be between 0 and 255: " << endl;
+		cout << "Number must be between 0 and 255: ";
 		cin.ignore(256, '\n');
-		cin >>number
+		cin >> number;
 	}
-
+	
+	cout  << endl;	
+	
 		if (number >= 128)
 		{
 			binaryRule[0] = 1;
@@ -119,6 +120,9 @@ void convert(int number) //method to convert an int input to binary format
 
 int main()
 {	
+
+	ofstream file;	
+
 	// get user input
 	cout << "Enter the desired width: ";
 	cin >> width;
@@ -126,11 +130,10 @@ int main()
 	cout << "Enter the desired height: ";   
 	cin >> height;
 
-	/*cout << "Enter the desired rule: ";
-	cin >> rule;*/
+	convert(); //get user rule input
 
 	int currentGen[width];
-	int nxtGen[width]; //vector for the next line of cells
+	int nxtGen[width]; //array for the next line of cells
 
 	for(int i=0; i<width; i++) // fill array with 0's
 	{
@@ -139,10 +142,16 @@ int main()
 
 	currentGen[width/2] = 1; //put a 1 in middle of array
 
+	file.open("output.txt"); //open text file
+
 	for(int j=0; j<width; j++) //print first generation
 	{
 		cout << currentGen[j];
+		file  << currentGen[j];
 	}
+
+	file  << endl;
+
 	cout << endl; // add new line 
 	
 
@@ -181,7 +190,10 @@ int main()
 				for(int l=0; l<width; l++) //print the new generation
 				{
 					cout << nxtGen[l];
+					file  << nxtGen[l];
 				}
+
+				file  << endl;
 
 				for(int n=0; n<width; n++) //set current generation to be the next 
 				{
@@ -196,7 +208,10 @@ int main()
 	}	
 
 
-
+	file.close(); //close file
+	cout << endl; // add new line
+	cout << "Saved output to text file!" << endl; 
+	
 
 
 
